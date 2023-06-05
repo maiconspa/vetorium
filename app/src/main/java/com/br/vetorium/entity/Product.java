@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,19 +29,25 @@ public class Product {
     private Long id;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "source")
-    Source source;
+    private Source source;
 
     @Column(name = "affiliate_url")
-    String affiliate_url;
+    private String affiliateUrl;
 
-    @Column(name = "images_url")
-    List<String> images_urls;
+    @Column(name = "image_urls")
+    private List<String> imageUrls;
+
+    @Column(name = "create_date")
+    private LocalDate createDate;
+
+    @Column(name = "update_date")
+    private LocalDate updateDate;
 
     @Override
     public boolean equals(Object o) {
