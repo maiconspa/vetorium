@@ -1,6 +1,7 @@
 package com.br.vetorium.entity;
 
 import com.br.vetorium.enums.Source;
+import com.br.vetorium.utils.Constants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,9 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.springframework.data.util.ProxyUtils.getUserClass;
 
@@ -44,10 +49,10 @@ public class Product {
     private List<String> imageUrls;
 
     @Column(name = "create_date")
-    private LocalDate createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "update_date")
-    private LocalDate updateDate;
+    private LocalDateTime updateDate;
 
     @Override
     public boolean equals(Object o) {
@@ -61,5 +66,22 @@ public class Product {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public static Boolean isValidDatePattern(String dateString) {
+        Pattern regex = Pattern.compile(Constants.STRING_DATE_MATCHER);
+        Matcher matcher = regex.matcher(dateString);
+
+        return matcher.matches();
+    }
+
+    public static String formatDateToString(LocalDateTime localDate) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.STRING_DATE_FORMATTER);
+        String formattedDate = localDate.format(formatter);
+
+        if (isValidDatePattern(formattedDate))
+            return formattedDate;
+        else
+            throw new DateTimeParseException("Invalid date-time format", formattedDate, 0);
     }
 }

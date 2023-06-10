@@ -1,13 +1,14 @@
 package com.br.vetorium.dto;
 
 import com.br.vetorium.enums.Source;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,6 @@ public class ProductDto implements Serializable {
     private Source source;
     private String affiliateUrl;
     private List<String> imageUrls;
-    private LocalDate updateDate;
+    private String createDate;
+    private String updateDate;
 }
